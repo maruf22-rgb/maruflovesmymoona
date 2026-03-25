@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ff9a9e">
+  <title>💖 Do You Love Me? 💖</title>
+  <style>
+    /* ... (Keeping your original beautiful styles) ... */
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%);
+      font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      overflow: hidden; /* Prevent scrollbars during heart rain */
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 650px;
+      background: rgba(255, 248, 245, 0.92);
+      backdrop-filter: blur(2px);
+      border-radius: 4rem 3rem 4rem 3rem;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 10;
+    }
+
+    .card { padding: 2.8rem 2rem 3rem; text-align: center; }
+    
+    .question {
+      font-size: 2rem;
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+      color: #2c3e66;
+      background: #fff0e7;
+      display: inline-block;
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+
+    .btn {
+      font-size: 1.7rem;
+      font-weight: bold;
+      padding: 0.9rem 2.4rem;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      touch-action: manipulation;
+    }
+
+    .btn-yes { background: linear-gradient(120deg, #4cd964, #32c759); color: white; }
+    .btn-no { background: linear-gradient(120deg, #ff3b30, #ff6b4a); color: white; }
+
+    /* The "No" Vanish Animation */
+    .no-bounce-vanish { animation: creativeVanish 0.7s ease forwards; pointer-events: none; }
+    @keyframes creativeVanish {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: translate(120px, -200px) rotate(45deg) scale(0); opacity: 0; }
+    }
+
+    /* Floating Heart Particles */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      font-size: 1.5rem;
+      animation: floatUp 3s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    }
+
+    .match-page h2 {
+      font-size: 3rem;
+      background: linear-gradient(145deg, #e84393, #ff6b6b, #f9ca24);
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .reset-button {
+      margin-top: 2.5rem;
+      background: #ffb347;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container" id="appRoot"></div>
+
+<script>
+  (function() {
+    const appContainer = document.getElementById('appRoot');
+
+    function createHeartBurst() {
+      const hearts = ['❤️', '💖', '💝', '💕', '💗', '🌸'];
+      for (let i = 0; i < 40; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'particle';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        
+        // Random directions for the burst
+        const dx = (Math.random() - 0.5) * 600 + 'px';
+        const dy = (Math.random() - 0.5) * 600 - 200 + 'px';
+        
+        heart.style.setProperty('--dx', dx);
+        heart.style.setProperty('--dy', dy);
+        heart.style.left = '50%';
+        heart.style.top = '50%';
+        
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
+    }
+
+    function renderQuestionView() {
+      appContainer.innerHTML = `
+        <div class="card">
+          <div style="margin-bottom: 0.5rem;">
+            <span class="question">💌 Do You Love Me? 💌</span>
+          </div>
+          <div class="button-panel" id="buttonPanel">
+            <button class="btn btn-yes" id="yesBtn">💚 YES 💚</button>
+            <button class="btn btn-no" id="noBtn">❌ NO ❌</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('yesBtn').onclick = () => {
+        createHeartBurst(); // Trigger the explosion!
+        setTimeout(renderMatchView, 300);
+      };
+
+      const noBtn = document.getElementById('noBtn');
+      noBtn.onclick = () => {
+        noBtn.classList.add('no-bounce-vanish');
+        setTimeout(() => noBtn.remove(), 700);
+      };
+    }
+
+    function renderMatchView() {
+      appContainer.innerHTML = `
+        <div class="card match-page">
+          <h2>💖 Yay, it's a match! 💖</h2>
+          <div style="font-size: 1.5rem;">✨ I knew it! ✨</div>
+          <button class="reset-button" id="resetBtn">🔄 Try Again?</button>
+        </div>
+      `;
+      document.getElementById('resetBtn').onclick = renderQuestionView;
+    }
+
+    renderQuestionView();
+  })();
+</script>
+</body>
+</html>

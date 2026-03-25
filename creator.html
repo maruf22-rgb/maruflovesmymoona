@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Creator Dashboard</title>
+  <style>
+    body { background: #2c3e50; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+    .stat-card { background: #34495e; padding: 20px; border-radius: 20px; display: inline-block; margin-bottom: 30px; }
+    .count { font-size: 4rem; color: #ff6b6b; display: block; }
+    .gallery img { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; margin: 10px; border: 3px solid #ffb347; }
+  </style>
+</head>
+<body>
+  <h1>Hello, Creator! 👑</h1>
+  
+  <div class="stat-card">
+    <span class="count" id="noCount">0</span>
+    <p>Times she tried to say No</p>
+  </div>
+
+  <h2>Memory Gallery</h2>
+  <div class="gallery">
+    <img src="photo1.jpg" alt="Us">
+    <img src="photo2.jpg" alt="Us">
+    <img src="photo3.jpg" alt="Us">
+  </div>
+
+  <script>
+    // Here, you would add the code to fetch the number 
+    // from your Firebase database to update 'noCount'
+  </script>
+</body>
+</html>
